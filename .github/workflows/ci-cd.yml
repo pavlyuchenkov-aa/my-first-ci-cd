@@ -35,10 +35,16 @@ jobs:
         run: |
           pip install bandit
           bandit -r . --severity-level high --confidence-level high -f json -o bandit_results.json || true
-
-      # Шаг 4.0: Сохраняем отчет Bandit как артефакт для последующего просмотра
+          # Опции:
+          # -r . - рекурсивно сканировать текущую директорию
+          # --severity-level high - показывать только уязвимости уровня HIGH
+          # --confidence-level high - показывать только уязвимости с высоким уровнем достоверности
+          # -f json -o ... - вывести результат в файл в формате JSON
+          # || true - это костыль, чтобы шаг не "падал" при найденных уязвимостях.
+          # Мы обработаем результат на следующем шаге.
+          
       - name: Upload Bandit results artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: bandit-results
           path: bandit_results.json
