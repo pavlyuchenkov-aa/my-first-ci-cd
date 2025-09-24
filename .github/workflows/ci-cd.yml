@@ -29,6 +29,12 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
           pip install pytest # Устанавливаем pytest для запуска тестов
+          
+      # Шаг 3.1: Запускаем flake8 для проверки стиля кода
+      - name: Run flake8 linting
+        run: |
+          pip install flake8
+          flake8 . --exit-zero
 
       # Шаг 4: Запускаем SAST-сканер (Bandit) для анализа исходного кода
       - name: Run Bandit SAST Scan
