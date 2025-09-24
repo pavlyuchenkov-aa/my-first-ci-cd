@@ -36,6 +36,14 @@ jobs:
           pip install flake8
           flake8 . --exit-zero
 
+      # Шаг 3.2: Загружаем отчет flake8 как артефакт
+      - name: Upload flake8 results artifact
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: flake8-results
+          path: flake8_results.txt
+
       # Шаг 4: Запускаем SAST-сканер (Bandit) для анализа исходного кода
       - name: Run Bandit SAST Scan
         run: |
